@@ -59,14 +59,12 @@ while True:
     while not grade_point_average:
         grade_point_average = input("What is the student's GPA? ")
 
-        # We can only convert the input to a float if the input is entirely non-alpha.
-        for char in grade_point_average:
-            # If ANY character is alpha, or an illegal char get a new input.
-            if char.isalpha() or char in illegal_characters:
-                print("Invalid GPA input, try again.")
-                # Reset the grade_point_average value so the loop will run again for GPA input.
-                grade_point_average = None
-                continue
+        # We can only convert the input to a float if the input is entirely non-alpha and no illegal characters.
+        if not grade_point_average.isalpha() or check_for_illegal_characters(grade_point_average):
+            print("Invalid GPA input, try again.")
+            # Reset the grade_point_average value so the loop will run again for GPA input.
+            grade_point_average = None
+            continue
 
         # Now we know the GPA is all numeric, make it a float
         grade_point_average = float(grade_point_average)
