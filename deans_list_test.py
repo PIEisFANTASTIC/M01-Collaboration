@@ -13,68 +13,64 @@ def check_for_illegal_characters(string_to_check):
         # We found an illegal character, return True
         if char in illegal_characters:
             return True
-    # We've gotten through the string with no bad characters, return false.
+    # We've gotten through the string with no bad characters, return False.
     return False
+
+def name_input(name_string):
+    # We will keep trying until we get a valid name.
+    name = ""
+    while not name:
+        if name_string == "last":
+            name = input("What is the student's last name? (Type ZZZ to end the program.) ")
+        else:
+            name = input("What is the student's first name? ")
+
+        # Let's strip hyphons and periods from the input string for the check, otherwise will fail the sanity check.
+        stripped_name = name.replace('-', '')
+        stripped_name = name.replace('.', '')
+
+        # Names are only alphabetical, no numbers or illegal chars.
+        if not stripped_name.isalpha() or check_for_illegal_characters(stripped_name):
+            print("Invalid %s name input, try again. " % name_string)
+            # Reset the last_name value so the loop will run again for name input.
+            name = ""
+            continue
+    return name
+
+def gpa_input():
+    gpa = None
+    while not gpa:
+        gpa = input("What is the student's GPA? ")
+
+        # We can only convert the input to a float if the input is entirely non-alpha and no illegal characters.
+        if gpa.isalpha() or check_for_illegal_characters(gpa) or (gpa.count(".") > 1):
+            print("Invalid GPA input, try again.")
+            # Reset the gpa value so the loop will run again for GPA input.
+            gpa = None
+            continue
+
+        # Now we know the GPA is all numeric, make it a float
+        gpa = float(gpa)
+
+        # Let's make sure our GPA is logical first.
+        if gpa < 0 or gpa > 4:
+            print("GPA out of range (0-4), please try again.")
+            # Reset the gpa value so the loop will run again for GPA input.
+            gpa = None
+            continue
+    return gpa
 
 # This loop will only break if the last_name input is ZZZ.
 while True:
-    # We will keep trying until we get a valid last name.
-    last_name = ""
-    while not last_name:
-        last_name = input("What is the student's last name? (Type ZZZ to end the program.) ")
-
-        # Let's strip hyphons and periods from the input string for the check, otherwise will fail the sanity check.
-        stripped_last_name = last_name.replace('-', '')
-        stripped_last_name = last_name.replace('.', '')
-
-        # Last names are only alphabetical, no numbers or illegal chars.
-        if not stripped_last_name.isalpha() or check_for_illegal_characters(stripped_last_name):
-            print("Invalid last name input, try again.")
-            # Reset the last_name value so the loop will run again for name input.
-            last_name = ""
-            continue
+    last_name = name_input("last")
 
     if last_name == "ZZZ":
         print("Thank you for using the Dean's List and Honor Role Checker, have a nice day!")
         break
 
-    # We will keep trying until we get a valid first name.
-    first_name = ""
-    while not first_name:
-        first_name = input("What is the student's first name? ")
+    first_name = name_input("first")
 
-        # Let's strip hyphons and periods from the input string for the check, otherwise will fail the sanity check.
-        stripped_first_name = first_name.replace('-', '')
-        stripped_first_name = first_name.replace('.', '')
-
-        # First names are only alphabetical, no numbers
-        if not stripped_first_name.isalpha() or check_for_illegal_characters(stripped_first_name):
-            print("Invalid first name input, try again.")
-            # Reset the first_name value so the loop will run again for name input.
-            first_name = ""
-            continue
-
-    # We will keep trying until we get a valid GPA.
-    grade_point_average = None
-    while not grade_point_average:
-        grade_point_average = input("What is the student's GPA? ")
-
-        # We can only convert the input to a float if the input is entirely non-alpha and no illegal characters.
-        if grade_point_average.isalpha() or check_for_illegal_characters(grade_point_average):
-            print("Invalid GPA input, try again.")
-            # Reset the grade_point_average value so the loop will run again for GPA input.
-            grade_point_average = None
-            continue
-
-        # Now we know the GPA is all numeric, make it a float
-        grade_point_average = float(grade_point_average)
-
-        # Let's make sure our GPA is logical first.
-        if grade_point_average < 0 or grade_point_average > 4:
-            print("GPA out of range (0-4), please try again.")
-            # Reset the grade_point_average value so the loop will run again for GPA input.
-            grade_point_average = None
-            continue
+    grade_point_average = gpa_input()
 
     # Okay, with all of the inputs and sanity checking out of the way, we can now formulate our outputs!
     # First, let's have our strings ready ahead of time.
