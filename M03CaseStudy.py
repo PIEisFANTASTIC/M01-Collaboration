@@ -1,3 +1,18 @@
+'''
+Alexander Smith
+M03CaseStufy.py
+This program will take inputs for a a new vehicle, then will take the inputs into class attributes
+to list out an easy-to-read info block on the vehicle.
+Classes:
+    Vehicle
+        type - String, gets the type of vehicle
+    Automobile, inherits from Vehicle
+        year - String, gets the year of vehicle
+        make - String, gets the make of vehicle
+        model - String, gets the model of vehicle
+        doors - String, gets the number of doors on the vehicle
+        roof - String, gets the roof type of vehicle
+'''
 class Vehicle():
     def __init__(self, type):
         self.type = type
